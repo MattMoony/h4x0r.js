@@ -2,7 +2,7 @@
 _The ultimate 1337 h4x0r JS-Terminal_
 
 ## Current status
-This is a work-in-progress, however, I hope you enjoy the idea, and appreciate
+This is a __work-in-progress__, however, I hope you enjoy the idea, and appreciate
 what I've created so far.
 
-... Matthias M.
+_... Matthias M. (March, 2019)_

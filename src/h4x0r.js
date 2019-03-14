@@ -3,7 +3,6 @@ class H4x0r {
     this.target = target;
     opts = opts || {};
 
-    this.cursorSpeed = opts.cursorSpeed || 0.25;
     this.showCreds = opts.showCreds !== undefined ? opts.showCreds : true;
     this.inputNextLine = opts.inputNextLine || false;
     this.anime = null;
@@ -72,12 +71,16 @@ class H4x0r {
       }` : ""}
 
       .h4x0r-output {
-        display: inline-block;
+        display: ${this.inputNextLine ? "block" : "inline-block"};
         margin-right: 5px;
       }
 
+      .h4x0r-no-creds::before {
+        content: '';
+      }
+
       .h4x0r-input {
-        display: inline;
+        display: ${this.inputNextLine ? "block" : "inline"};
       }
       .h4x0r-input:focus {
         outline: none;
@@ -94,13 +97,17 @@ class H4x0r {
   display(str, opts) {
     let line = document.createElement('div'),
         output = document.createElement('div');
+
+    opts = opts || {};
+
     line.classList.add('h4x0r-line');
+    if (opts.noCreds)
+      line.classList.add('h4x0r-no-creds');
+
     output.classList.add('h4x0r-output');
 
     output.innerHTML = str;
     line.appendChild(output);
-
-    opts = opts || {};
 
     if (opts.center)
       line.style.textAlign = 'center';
@@ -118,7 +125,6 @@ class H4x0r {
         input = document.createElement('div');
 
     line.classList.add('h4x0r-line');
-
     output.classList.add('h4x0r-output');
     output.innerHTML = msg;
 
@@ -135,7 +141,7 @@ class H4x0r {
     input.onkeyup = e => {
       if (e.keyCode === 13) {
         input.contentEditable = false;
-        input.innerHTML = input.innerHTML.replace(/<br>/g, '');
+        input.innerHTML = input.innerHTML.replace(/<br>/g, '').replace(/<\/?div>/g, '');
         (cb || function(){})(input.innerHTML.replace(/&nbsp;/g, '').trim());
       }
     };
